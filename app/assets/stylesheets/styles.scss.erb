@@ -1,0 +1,260 @@
+@font-face {
+font-family:'Glyphicons Halflings';
+src:url(asset_path("glyphicons-halflings-regular.eot?#iefix")) format(embedded-opentype), url(asset_path("glyphicons-halflings-regular.woff")) format(woff), url(asset_path("glyphicons-halflings-regular.ttf")) format(truetype), url(asset_path("glyphicons-halflings-regular.svg#glyphicons-halflingsregular")) format(svg);
+}
+
+@font-face {
+	font-family: 'Josefin Slab';
+	src:url(asset_path("JosefinSlab-Regular.ttf")) format(truetype), url(asset_path("JosefinSlab-Bold.ttf")) format(truetype);
+}
+
+
+.glyphicon-headphones, .glyphicon-headphones:before, .glyphicon-headphones:before {
+text-align:center;
+text-decoration:none!important;
+font-size:24px;
+background:white;
+color:rgb(255,160,60);
+font-family:'Glyphicons Halflings';
+font-style:normal;
+font-weight:400;
+border-radius: 50%;
+line-height:50px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+max-width: 53px;
+}
+
+
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  color: #5a5a5a;
+}
+
+h1 {
+	color: rgb(1,87,120) !important;
+    font-family:'Josefin Slab' !important; 
+}
+
+h2 {
+	color: rgb(1,87,120) !important;
+    font-family:'Josefin Slab' !important;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a {
+	color: rgb(1,87,120) !important;
+	font-style: bold;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.carousel h1 {
+	color: white !important;
+  font-size:5.9vw;
+}
+
+.carousel h2 {
+  color: white !important;
+}
+
+.carousel p {
+   font-size: 2.5vw;
+}
+
+
+
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  background-color: #777;
+}
+
+
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Pad the edges of the mobile views a bit */
+.marketing {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-md-4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.marketing .col-md-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.fb-like {
+	margin-top: 15px;
+	margin-right: 0px;
+	display:inline-block; 
+	vertical-align:middle;
+}
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading h2 {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.text-muted {
+	color: rgb(39,168,223);
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+  /* Remove the edge padding needed for mobile */
+  .marketing {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+    color: #5a5a5a;
+  }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 120px;
+  }
+}
+
+/* FOOTER
+-------------------------------------------------- */
+.footer {
+background:rgb(255,183,0);
+text-align:center;
+width:100%;
+}
+
+.footer p {
+color:#fff;
+font-size:14px;
+}
+
+.footer p a,.footer p a:hover {
+color:#fff;
+}
+
+footer.footer a[data-pin-log=button_follow] {
+background:none!important;
+text-indent:0!important;
+}
+
+
+
+/* CONTACT FORM
+-------------------------------------------------- */
+
+.contact-form {
+    margin-top:70px;
+}
+
+
+.address {
+	font-family:'Josefin Slab' !important;
+  font-weight: bold;
+	font-size: 30px;
+	color: rgb(1,87,120);
+}
+
+.address a:link {
+    color: rgb(1,87,120);
+}
+
+/* JUMBOTRONS
+-------------------------------------------------- */
+
+.jumbotron {
+	margin-top: 60px !important;
+}
+
+.img-responsive {
+    margin: 0 auto !important;
+}
+
+
+/* CONTACT FORM
+-------------------------------------------------- */
+.hidden { display: none; }
+
+/*flash*/
+
+.alert-error {
+background-color: #f2dede;
+border-color: #eed3d7;
+color: #b94a48;
+text-align: left;
+}
+
+.alert-alert {
+background-color: #f2dede;
+border-color: #eed3d7;
+color: #b94a48;
+text-align: left;
+}
+
+.alert-success {
+background-color: #dff0d8;
+border-color: #d6e9c6;
+color: #468847;
+text-align: left;
+}
+
+.alert-notice {
+background-color: #dff0d8;
+border-color: #d6e9c6;
+color: #468847;
+text-align: left;
+}
