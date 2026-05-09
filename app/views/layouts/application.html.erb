@@ -25,9 +25,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Josefin+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" href="<%= asset_path('406icon.png') %>">
+    <link rel="apple-touch-icon" href="<%= asset_path('406icon.png') %>">
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <%= render "layouts/json_ld" %>
     <%= yield :extra_json_ld %>
     <%= render "layouts/analytics" %>
@@ -49,6 +53,6 @@
     <%= render "layouts/footer" %>
 
     <%# Hero carousel loads after DOM is parsed (import map is already in <head>). %>
-    <script type="module">import "hero_carousel"</script>
+    <%= javascript_tag nonce: true, type: "module" do %>import "hero_carousel"<% end %>
   </body>
 </html>

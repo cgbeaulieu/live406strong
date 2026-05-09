@@ -12,7 +12,6 @@ gem 'tailwindcss-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 
-gem 'simple_form'
 gem 'mail_form'
 
 group :test do

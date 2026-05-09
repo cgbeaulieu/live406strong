@@ -15,8 +15,12 @@ class ContactsController < ApplicationController
     if @contact.deliver
       redirect_to contact_path, notice: 'Thank you—we received your message and will reply soon.'
     else
-      flash.now[:error] = 'We could not send your message. Please try again or email sally@406strong.com.'
-      render :new
+      flash.now[:error] = if @contact.errors.any?
+                            'Please fix the highlighted fields and try again.'
+                          else
+                            'We could not send your message. Please try again or email sally@406strong.com.'
+                          end
+      render :new, status: :unprocessable_entity
     end
   end
 

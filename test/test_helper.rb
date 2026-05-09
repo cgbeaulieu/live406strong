@@ -6,6 +6,7 @@ SimpleCov.start 'rails' do
 end
 
 ENV['RAILS_ENV'] ||= 'test'
+ENV['CONTACT_FORM_TO'] ||= 'sally@406strong.com'
 require_relative '../config/environment'
 require 'rails/test_help'
 

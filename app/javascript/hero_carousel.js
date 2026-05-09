@@ -58,10 +58,12 @@ function mountCarousels() {
       }
     }
 
+    let paused = false
+
     function startTimer() {
       stopTimer()
       const ms = carouselParseInterval(root)
-      if (prefersReduced || ms <= 0) return
+      if (prefersReduced || ms <= 0 || paused) return
       root._carouselTimer = window.setInterval(() => {
         show(current + 1)
       }, ms)
@@ -70,6 +72,16 @@ function mountCarousels() {
     function resetTimer() {
       if (prefersReduced || carouselParseInterval(root) <= 0) return
       stopTimer()
+      startTimer()
+    }
+
+    function pause() {
+      paused = true
+      stopTimer()
+    }
+
+    function resume() {
+      paused = false
       startTimer()
     }
 
@@ -101,6 +113,17 @@ function mountCarousels() {
         sig
       )
     })
+
+    // Pause autoplay while the user is interacting (WCAG 2.2.2).
+    root.addEventListener("mouseenter", pause, sig)
+    root.addEventListener("mouseleave", resume, sig)
+    root.addEventListener("focusin", pause, sig)
+    root.addEventListener("focusout", (e) => {
+      if (!root.contains(e.relatedTarget)) resume()
+    }, sig)
+    document.addEventListener("visibilitychange", () => {
+      document.hidden ? pause() : resume()
+    }, sig)
 
     show(0)
     startTimer()

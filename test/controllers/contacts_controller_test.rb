@@ -27,7 +27,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/thank you/i, response.body)
   end
 
-  test 'post contact with invalid data renders form with error flash' do
+  test 'post contact with invalid data renders form with field-level errors' do
     assert_no_difference -> { ActionMailer::Base.deliveries.size } do
       post contact_path, params: {
         contact: {
@@ -39,9 +39,10 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_select 'form'
-    assert_match(/cannot send message/i, response.body)
+    assert_match(/highlighted fields/i, response.body)
+    assert_select '[aria-invalid="true"]'
   end
 
   test 'post contact with honeypot filled does not deliver mail' do
@@ -50,14 +51,30 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
         contact: {
           name: 'Bot',
           email: 'bot@example.com',
-          message: 'Spam',
+          message: 'Spam, with enough length to be valid.',
           nickname: 'trap'
         }
       }
     end
 
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_select 'form'
-    assert_match(/cannot send message/i, response.body)
+    assert_match(/could not send your message/i, response.body)
+  end
+
+  test 'delivered contact email uses our domain in From and visitor in Reply-To' do
+    post contact_path, params: {
+      contact: {
+        name: 'Jane',
+        email: 'jane@example.com',
+        message: 'Interested in Pilates.',
+        nickname: ''
+      }
+    }
+
+    mail = ActionMailer::Base.deliveries.last
+    refute_nil mail
+    refute_includes mail.from.to_a, 'jane@example.com'
+    assert_includes mail.reply_to.to_a, 'jane@example.com'
   end
 end

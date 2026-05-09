@@ -1,9 +1,9 @@
 <% if ga4_measurement_id.present? %>
   <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga4_measurement_id %>"></script>
-  <script>
+  <%= javascript_tag nonce: true do %>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', '<%= j ga4_measurement_id %>');
-  </script>
+  <% end %>
 <% end %>

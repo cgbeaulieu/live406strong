@@ -1,5 +1,5 @@
 <% content_for :extra_json_ld do %>
-  <script type="application/ld+json">
+  <script type="application/ld+json" nonce="<%= content_security_policy_nonce %>">
   <%= ({
     "@context" => "https://schema.org",
     "@type" => "Person",

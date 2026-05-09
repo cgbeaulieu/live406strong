@@ -26,8 +26,6 @@ Rails.application.configure do
 
   config.log_level = :info
 
-  config.active_storage.service = :local if defined?(ActiveStorage)
-
   config.action_controller.perform_caching = true
 
   config.action_mailer.default_url_options = { host: app_host }
