@@ -2,7 +2,7 @@
 
 ## Current stack (target)
 
-- **Ruby:** 4.0.3 (`/.ruby-version`)
+- **Ruby:** 3.4.3 (`/.ruby-version`)
 - **Rails:** 8.0.x (see `Gemfile`)
 - **Assets:** Sprockets (`sprockets-rails` + Tailwind v4 via `tailwindcss-rails`), manifest at `app/assets/config/manifest.js`
 - **Server:** Puma (`config/puma.rb`)
@@ -23,7 +23,7 @@
 
 Image tags (`406icon.png`, carousel JPEGs, etc.) expect files under **`app/assets/images/`** (or another path on the Sprockets load path). If those binaries are missing from the repo, add them back into `app/assets/images/` (or switch those tags to plain `/public/...` URLs). The favicon now lives at `public/favicon.ico` and a PNG icon link points at `406icon.png`.
 
-## Local commands (Ruby 4 on PATH)
+## Local commands (Ruby 3.4 on PATH)
 
 ```powershell
 $env:RAILS_ENV = "development"

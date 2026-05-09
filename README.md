@@ -7,7 +7,7 @@ Marketing site for **406 Strong** (Whitefish, MT), built with [Ruby on Rails](ht
 | Layer | Technology |
 | --- | --- |
 | Framework | Rails **8.0** (minimal stack: no Active Storage, Action Cable, Mailbox, or Text) |
-| Ruby | **4.0.3** (see `.ruby-version`) |
+| Ruby | **3.4.3** (see `.ruby-version`) |
 | Database | **SQLite** (development & test), **PostgreSQL** (production via `DATABASE_URL`) |
 | Frontend | Hotwire (**Turbo**, **Stimulus**), **Tailwind CSS**, **Importmap** (no Node bundler required for JS) |
 | Server | **Puma** |
@@ -15,7 +15,7 @@ Marketing site for **406 Strong** (Whitefish, MT), built with [Ruby on Rails](ht
 
 ## Prerequisites
 
-- Ruby 4.0.3 (use [rbenv](https://github.com/rbenv/rbenv), [asdf](https://asdf-vm.com/), or another version manager)
+- Ruby 3.4.3 (use [rbenv](https://github.com/rbenv/rbenv), [asdf](https://asdf-vm.com/), or another version manager)
 - Bundler (`gem install bundler`)
 - SQLite (for local DB)
 - PostgreSQL client libraries only if you run production-like configs locally
