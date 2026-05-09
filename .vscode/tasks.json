@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Bundle Install",
+      "type": "shell",
+      "command": "bundle install",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "RAILS_ENV": "development"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "DB Prepare (development)",
+      "type": "shell",
+      "command": "bundle exec rails db:prepare",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "RAILS_ENV": "development"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Rails Server (Puma)",
+      "type": "shell",
+      "command": "bundle exec rails server -b 127.0.0.1 -p 3000",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "RAILS_ENV": "development"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "bundle exec rails test",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "RAILS_ENV": "test"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Asset Precompile (production)",
+      "type": "shell",
+      "command": "$env:RAILS_ENV='production'; $env:SECRET_KEY_BASE='precompile-temp-key-for-local-' + ('0' * 48); bundle exec rails assets:precompile",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

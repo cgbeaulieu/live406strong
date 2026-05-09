@@ -1,0 +1,181 @@
+<section class="bleed-full overflow-hidden bg-slate-900" aria-label="Featured">
+  <div id="hero-carousel"
+       data-carousel-root
+       data-carousel-interval="8000"
+       class="relative isolate">
+    <div class="relative h-[70vh] max-h-[640px] min-h-[280px]">
+      <% [
+           ['hero-sessions.jpg', "Personal training session", "Ten sessions from $499", "One-on-one training built around your goals, your body, and your calendar.", true, true],
+           ['hero-welcome.jpg', "Bright training space", "Welcoming new clients", "In studio in Whitefish—or virtual coaching when you are miles away.", true, false],
+           ['hero-consultation.jpg', "Fitness consultation", "Free consultation for first-time clients", "Start with a conversation about where you are—and where you want to go.", false, false],
+           ['hero-recipes.jpg', "Healthy meals and ingredients", "Nutrition that fits real life", "Seasonal ideas and balanced meals you can sustain—not just start.", false, false]
+         ].each_with_index do |(img, alt, title, sub, show_btn, is_h1), i| %>
+        <div data-carousel-slide
+             class="absolute inset-0 transition-opacity duration-500 ease-out <%= i.zero? ? 'pointer-events-auto z-10 opacity-100' : 'pointer-events-none z-0 opacity-0' %>"
+             aria-hidden="<%= i.nonzero? %>">
+          <%= image_tag img, alt: alt, class: "h-full w-full object-cover", width: 1920, height: 640, sizes: "100vw", loading: i.zero? ? "eager" : "lazy", fetchpriority: i.zero? ? "high" : "auto", decoding: "async" %>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10" aria-hidden="true"></div>
+          <div class="absolute inset-x-0 bottom-0 flex flex-col justify-end px-4 pb-10 sm:px-8 md:pb-12">
+            <div class="mx-auto w-full max-w-4xl rounded-2xl bg-black/45 px-5 py-6 text-white shadow-lg backdrop-blur-sm sm:px-8">
+              <% if is_h1 %>
+                <h1 class="heading-display font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl"><%= title %></h1>
+              <% else %>
+                <h2 class="heading-display font-serif text-2xl font-bold text-white sm:text-3xl md:text-4xl"><%= title %></h2>
+              <% end %>
+              <p class="mt-2 max-w-2xl text-base text-white/90 sm:text-lg"><%= sub %></p>
+              <% if show_btn %>
+                <p class="mt-5">
+                  <%= link_to "Schedule now", contact_path, class: "btn-brand no-underline", role: "button" %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Full-area overlay: pointer-events-none so slides/caption receive hits; arrows use pointer-events-auto %>
+    <div class="pointer-events-none absolute inset-0 z-[100] flex items-center justify-between px-2 md:px-4">
+      <button type="button"
+              data-carousel-prev
+              class="pointer-events-auto cursor-pointer rounded-full border-0 bg-black/55 p-2 text-white shadow-lg backdrop-blur hover:bg-black/70 md:p-2.5"
+              aria-label="Previous slide">
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button type="button"
+              data-carousel-next
+              class="pointer-events-auto cursor-pointer rounded-full border-0 bg-black/55 p-2 text-white shadow-lg backdrop-blur hover:bg-black/70 md:p-2.5"
+              aria-label="Next slide">
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="pointer-events-none absolute bottom-4 left-0 right-0 z-[100] flex justify-center gap-2" role="tablist" aria-label="Slides">
+      <% 4.times do |i| %>
+        <button type="button"
+                data-carousel-dot
+                class="pointer-events-auto h-2.5 rounded-full transition-all <%= i.zero? ? 'w-8 bg-white' : 'w-2.5 bg-white/45' %>"
+                aria-label="Go to slide <%= i + 1 %>"
+                aria-selected="<%= i.zero? %>"
+                role="tab"></button>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<div class="mx-auto max-w-6xl px-4 py-14">
+  <div class="grid gap-12 md:grid-cols-3 md:gap-8">
+    <div class="text-center">
+      <div class="mx-auto mb-4 h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-brand-teal/10">
+        <%= image_tag "pillar-fitness.jpg", alt: "", class: "h-full w-full object-cover", width: 280, height: 280, loading: "lazy", decoding: "async" %>
+      </div>
+      <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Women&rsquo;s fitness</h2>
+      <p class="mt-3 text-brand-muted">Training that meets you where you are—then grows with you. Plans respect your ability, your schedule, and real life, so progress feels clear and achievable.</p>
+    </div>
+    <div class="text-center">
+      <div class="mx-auto mb-4 h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-brand-teal/10">
+        <%= image_tag "pillar-encourage.jpg", alt: "", class: "h-full w-full object-cover", width: 280, height: 280, loading: "lazy", decoding: "async" %>
+      </div>
+      <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Training that adapts</h2>
+      <blockquote class="mt-3 border-none text-left text-brand-muted italic">
+        <p>Sally always took the time to listen to my concerns and change direction if something I was doing hurt my back (a continual problem area for me). She always made me feel like I was in the driver&rsquo;s seat, and encouraged and supported my own empowerment over my fitness.</p>
+        <footer class="mt-3 text-sm font-semibold not-italic text-brand-teal">— Allison D.</footer>
+      </blockquote>
+    </div>
+    <div class="text-center">
+      <div class="mx-auto mb-4 h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-brand-teal/10">
+        <%= image_tag "pillar-coaching.jpg", alt: "", class: "h-full w-full object-cover", width: 280, height: 280, loading: "lazy", decoding: "async" %>
+      </div>
+      <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Lifestyle coaching</h2>
+      <blockquote class="mt-3 border-none text-left text-brand-muted italic">
+        <p>My experience with Sally was incredibly positive. I learned how to work out, make better choices in what I eat, and she helped me stay motivated—even when progress was slow. It all paid off: I feel healthier, lighter, and several inches smaller.</p>
+        <footer class="mt-3 text-sm font-semibold not-italic text-brand-teal">— Jen M.</footer>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="mt-14 rounded-2xl border border-brand-teal/10 bg-brand-panel px-6 py-10 md:px-10">
+    <h2 class="heading-display text-center font-serif text-2xl font-semibold text-brand-teal md:text-3xl">What working together looks like</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3 md:gap-8">
+      <div>
+        <p class="font-semibold text-brand-teal">Start with clarity</p>
+        <p class="mt-2 text-brand-muted">Your first consultation is free—we discuss goals, history, and how movement fits your week.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-brand-teal">Train with a plan</p>
+        <p class="mt-2 text-brand-muted">Sessions blend strength, Pilates or TRX when it serves you, and coaching that adjusts as you improve.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-brand-teal">Build habits that last</p>
+        <p class="mt-2 text-brand-muted">Nutrition and lifestyle guidance supports what you do in the studio—so results carry into everyday life.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-16 border-brand-teal/15">
+
+  <div class="grid items-center gap-10 md:grid-cols-2">
+    <div>
+      <h2 class="heading-display font-serif text-3xl font-semibold text-brand-teal md:text-4xl">Guided Montana hiking excursions. <span class="text-brand-sky">Move with people who love this place.</span></h2>
+      <p class="mt-4 text-lg text-brand-muted">Hit the trail with a supportive group—build stamina and confidence in the mountains you already call home. Ask about upcoming hikes or how to pull together your own small group.</p>
+    </div>
+    <div>
+      <%= image_tag "feature-hiking.jpg", alt: "Mountain hiking in Montana", class: "w-full rounded-2xl shadow-xl ring-1 ring-black/5", width: 600, height: 400, loading: "lazy", decoding: "async", sizes: "(min-width: 768px) 50vw, 100vw" %>
+    </div>
+  </div>
+
+  <hr class="my-16 border-brand-teal/15">
+
+  <div class="grid items-center gap-10 md:grid-cols-2">
+    <div class="order-2 md:order-1">
+      <%= link_to "https://www.bigvalleyradio.com/OurShows/Fit4Montana.aspx", target: "_blank", rel: "noopener noreferrer", class: "block no-underline" do %>
+        <%= image_tag "feature-radio.jpg", alt: "Fit 4 Montana on Big Valley Radio", class: "w-full rounded-2xl shadow-xl ring-1 ring-black/5 transition hover:opacity-95", width: 600, height: 400, loading: "lazy", decoding: "async", sizes: "(min-width: 768px) 50vw, 100vw" %>
+      <% end %>
+    </div>
+    <div class="order-1 md:order-2">
+      <h2 class="heading-display font-serif text-3xl font-semibold text-brand-teal md:text-4xl">Host of <cite class="not-italic">Fit 4 Montana</cite>. <span class="text-brand-sky">Wellness on the airwaves.</span></h2>
+      <p class="mt-4 text-lg text-brand-muted">Sally talks movement, mindset, and staying strong in Montana—practical takeaways you can use this week. Catch episodes on Big Valley Radio.</p>
+      <p class="mt-6">
+        <%= link_to "Listen & episode listing", "https://www.bigvalleyradio.com/OurShows/Fit4Montana.aspx", class: "btn-outline no-underline", target: "_blank", rel: "noopener noreferrer" %>
+      </p>
+    </div>
+  </div>
+
+  <hr class="my-16 border-brand-teal/15">
+
+  <div class="grid items-center gap-10 md:grid-cols-2">
+    <div>
+      <h2 class="heading-display font-serif text-3xl font-semibold text-brand-teal md:text-4xl">Wellness destination events. <span class="text-brand-sky">Restore outdoors.</span></h2>
+      <p class="mt-4 text-lg text-brand-muted">Retreat-style days that combine intentional movement with Montana&rsquo;s wide-open calm—space to breathe deeply and reset. Inquire for dates and formats.</p>
+    </div>
+    <div>
+      <%= image_tag "feature-lake.jpg", alt: "Calm lake and mountains", class: "w-full rounded-2xl shadow-xl ring-1 ring-black/5", width: 600, height: 400, loading: "lazy", decoding: "async", sizes: "(min-width: 768px) 50vw, 100vw" %>
+    </div>
+  </div>
+</div>
+
+<section class="border-t border-brand-teal/10 bg-gradient-to-b from-white to-brand-surface py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <h2 class="heading-display text-center font-serif text-3xl font-semibold text-brand-teal md:text-4xl">Certifications &amp; credentials</h2>
+    <p class="mx-auto mt-2 max-w-2xl text-center text-lg text-brand-muted">Evidence-based methods from nationally recognized programs—so your plan is grounded in science, not trends.</p>
+    <div class="mt-12 grid gap-10 md:grid-cols-3">
+      <div class="rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-brand-teal/10">
+        <%= image_tag "ACSM.gif", alt: "American College of Sports Medicine", class: "mx-auto mb-4 max-h-[72px] w-auto", loading: "lazy", decoding: "async" %>
+        <p class="text-brand-muted">American College of Sports Medicine Certified Personal Trainer—insured for your peace of mind.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-brand-teal/10">
+        <%= image_tag "trx-logo.gif", alt: "TRX Suspension Training", class: "mx-auto mb-4 max-h-[72px] w-auto", loading: "lazy", decoding: "async" %>
+        <p class="text-brand-muted">TRX suspension training for strength and everyday function—little equipment, big versatility.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-brand-teal/10">
+        <%= image_tag "STOTT-pilates-logo.gif", alt: "STOTT PILATES", class: "mx-auto mb-4 max-h-[72px] w-auto", loading: "lazy", decoding: "async" %>
+        <p class="text-brand-muted">STOTT PILATES<sup>&reg;</sup>—modern principles in biomechanics, rehabilitation, and athletic performance.</p>
+      </div>
+    </div>
+    <p class="mt-12 text-center text-sm text-brand-muted">
+      Hero and feature photography via
+      <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="font-medium">Unsplash</a>
+      —custom photography can replace these anytime.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Rails server (Ruby from PATH)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "$env:RAILS_ENV='development'; bundle exec rails server -b 127.0.0.1 -p 3000",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Open App in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Rails + Chrome",
+            "configurations": [
+                "Rails server (Ruby from PATH)",
+                "Open App in Chrome"
+            ]
+        }
+    ]
+}

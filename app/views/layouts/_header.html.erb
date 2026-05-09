@@ -1,0 +1,39 @@
+<header class="fixed top-0 z-50 w-full border-b border-brand-teal/10 bg-white/95 shadow-sm backdrop-blur" data-controller="menu">
+  <div class="relative mx-auto max-w-6xl px-4">
+    <div class="flex h-14 items-center justify-between gap-4 md:h-16">
+      <%= link_to root_path, class: "group flex shrink-0 items-center no-underline transition-opacity hover:opacity-90", title: "406 Strong — Home" do %>
+        <%= image_tag "406icon.png", alt: "406 Strong", class: "h-11 w-auto max-h-11 shrink-0 rounded-lg object-contain md:h-12 md:max-h-12", loading: "eager", fetchpriority: "high", decoding: "async" %>
+      <% end %>
+
+      <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+        <%= link_to 'Home', root_path, class: nav_link_classes(root_path) %>
+        <%= link_to 'About', about_path, class: nav_link_classes(about_path) %>
+        <%= link_to 'Free consultation', contact_path,
+            class: "#{nav_link_classes(contact_path)} ml-2 rounded-full border-2 border-brand-gold bg-gradient-to-b from-brand-gold-light to-brand-gold px-4 py-2 text-sm font-bold text-brand-teal-dark shadow-sm hover:brightness-105 hover:no-underline" %>
+      </nav>
+
+      <button type="button"
+          data-menu-target="toggle"
+          data-action="menu#toggle"
+          class="inline-flex items-center justify-center rounded-lg border border-brand-teal/20 p-2 text-brand-teal md:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Menu">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-nav"
+        data-menu-target="panel"
+        hidden
+        class="absolute left-0 right-0 top-full z-40 border-t border-brand-teal/10 bg-white shadow-lg md:hidden">
+      <nav class="flex flex-col gap-1 px-4 py-4" aria-label="Mobile primary">
+        <%= link_to "Home", root_path, class: mobile_nav_link_classes(root_path) %>
+        <%= link_to "About", about_path, class: mobile_nav_link_classes(about_path) %>
+        <%= link_to "Free consultation", contact_path, class: "#{mobile_nav_link_classes(contact_path)} mt-2 rounded-xl bg-brand-gold py-3 text-center font-bold text-brand-teal-dark no-underline hover:no-underline" %>
+      </nav>
+    </div>
+  </div>
+</header>

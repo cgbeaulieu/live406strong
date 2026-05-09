@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% default_meta = "406 Strong — ACSM-certified personal training, STOTT PILATES, and TRX in Whitefish, Montana. In-studio and virtual coaching. Book a free consultation." %>
+    <% default_title = "406 Strong | Personal Training & Wellness | Whitefish, MT" %>
+    <% page_meta = @meta_description.presence || default_meta %>
+    <% page_og_title = @og_title.presence || @page_title.presence || default_title %>
+    <meta name="description" content="<%= page_meta %>">
+    <meta name="keywords" content="406 Strong, Whitefish, Montana, personal trainer, women fitness, Pilates, TRX, Flathead Valley, Kalispell, virtual training, STOTT Pilates">
+    <meta name="theme-color" content="#015778">
+    <meta name="author" content="406 Strong">
+    <meta property="og:title" content="<%= page_og_title %>">
+    <meta property="og:description" content="<%= page_meta %>">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= image_url('406icon.png') %>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= page_og_title %>">
+    <meta name="twitter:description" content="<%= page_meta %>">
+    <title><%= @page_title.presence || default_title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Josefin+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= csrf_meta_tags %>
+    <%= render "layouts/json_ld" %>
+    <%= yield :extra_json_ld %>
+    <%= render "layouts/analytics" %>
+  </head>
+  <body class="<%= "#{controller_name}-#{action_name}" %> font-sans antialiased">
+    <a href="#main-content" class="absolute left-[-9999px] top-4 z-[100] rounded-lg bg-white px-4 py-2 font-semibold text-brand-teal shadow outline-none ring-brand-gold focus:left-4 focus:ring-2">Skip to main content</a>
+    <%= render "layouts/header" %>
+
+    <% flash.each do |name, msg| %>
+      <div class="mx-auto max-w-6xl px-4 pt-4">
+        <%= content_tag(:div, msg, class: "rounded-xl border px-4 py-3 text-sm font-medium shadow-sm #{flash_container_classes(name)}", role: "alert") %>
+      </div>
+    <% end %>
+
+    <main id="main-content" class="pt-14 md:pt-16" tabindex="-1">
+      <%= yield %>
+    </main>
+
+    <%= render "layouts/footer" %>
+
+    <%# Hero carousel loads after DOM is parsed (import map is already in <head>). %>
+    <script type="module">import "hero_carousel"</script>
+  </body>
+</html>

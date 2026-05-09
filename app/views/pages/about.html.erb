@@ -1,0 +1,53 @@
+<% content_for :extra_json_ld do %>
+  <script type="application/ld+json">
+  <%= ({
+    "@context" => "https://schema.org",
+    "@type" => "Person",
+    "name" => "Sally Beaulieu",
+    "jobTitle" => "Certified Personal Trainer",
+    "worksFor" => { "@type" => "Organization", "name" => "406 Strong" },
+    "address" => {
+      "@type" => "PostalAddress",
+      "addressLocality" => "Whitefish",
+      "addressRegion" => "MT",
+      "addressCountry" => "US"
+    },
+    "url" => request.base_url
+  }.to_json).html_safe %>
+  </script>
+<% end %>
+
+<section class="border-b border-brand-teal/10 bg-gradient-to-br from-brand-teal via-brand-teal-dark to-brand-teal-darkest py-12 text-white md:py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <h1 class="heading-display font-serif text-4xl font-bold text-white md:text-5xl">About Sally</h1>
+    <p class="mt-2 text-lg text-white/85">Montana roots. Training grounded in education—and in listening.</p>
+  </div>
+</section>
+
+<div class="mx-auto max-w-6xl px-4 py-12 md:py-16">
+  <div class="grid gap-12 md:grid-cols-2 md:items-start">
+    <div class="max-w-none space-y-8 text-lg leading-relaxed text-brand-muted">
+      <div>
+        <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Credentials &amp; approach</h2>
+        <p class="mt-3 text-brand-text">
+          Sally is a Montana native who helps clients build &ldquo;Montana Strong&rdquo; lives—steady habits that hold up through busy seasons and changing bodies. She is nationally certified in personal training through the American College of Sports Medicine, with TRX suspension training and STOTT PILATES<sup>&reg;</sup> instruction; she weaves the five foundational STOTT principles into sessions when Pilates is part of your plan.
+        </p>
+      </div>
+      <div>
+        <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Family, faith &amp; balance</h2>
+        <p class="mt-3">
+          Sally and her husband Alan raised three sons here; their family now includes two daughters-in-law and a granddaughter she adores. Faith and family anchor her life—and she brings that same grounded outlook to coaching: nutrition counseling, movement, music, and nature as partners to everyday wellness. She believes staying healthy across every phase of life supports physical, mental, and spiritual well-being.
+        </p>
+      </div>
+      <div>
+        <h2 class="heading-display font-serif text-2xl font-semibold text-brand-teal">Beyond the studio</h2>
+        <p class="mt-3">
+          Away from sessions, Sally makes the most of Montana&rsquo;s outdoors and hosts <cite class="font-semibold not-italic text-brand-teal">Fit 4 Montana</cite> on Big Valley Radio—conversations on wellness under the Big Sky. You might find her hiking, skiing, snowshoeing, biking, on horseback, fly fishing, singing, strength training, practicing Pilates, cooking, or in the garden with family and friends.
+        </p>
+      </div>
+    </div>
+    <figure class="overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
+      <%= image_tag "sally.png", alt: "Sally Beaulieu, personal trainer", class: "w-full object-cover", width: 560, height: 700, loading: "lazy", decoding: "async", sizes: "(min-width: 768px) 40vw, 100vw" %>
+    </figure>
+  </div>
+</div>

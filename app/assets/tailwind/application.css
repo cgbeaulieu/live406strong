@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Scan app templates & helpers so class names in .erb / Ruby strings generate utilities */
+@source "../../views/**/*.html.erb";
+@source "../../helpers/**/*.rb";
+@source "../../javascript/**/*.js";
+
+/* Brand tokens – Tailwind v4 */
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Josefin Slab", ui-serif, Georgia, serif;
+
+  --color-brand-teal: #015778;
+  --color-brand-teal-dark: #013d54;
+  --color-brand-teal-darkest: #012c3d;
+  --color-brand-sky: #27a8df;
+  --color-brand-gold: #ffb700;
+  --color-brand-gold-light: #ffd054;
+  --color-brand-gold-deep: #e6a200;
+  --color-brand-text: #3a3f42;
+  --color-brand-muted: #5c656b;
+  --color-brand-surface: #f4f8fa;
+  --color-brand-panel: #f8fbfc;
+}
+
+@layer base {
+  html {
+    @apply antialiased scroll-smooth;
+  }
+  body {
+    @apply bg-brand-surface font-sans text-base leading-relaxed text-brand-text;
+  }
+  h1, h2, h3 {
+    @apply font-serif font-semibold text-brand-teal;
+  }
+  a {
+    @apply text-brand-sky underline-offset-2 hover:underline;
+  }
+}
+
+@layer components {
+  .bleed-full {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+  .btn-brand {
+    @apply inline-flex items-center justify-center rounded-full px-7 py-3 text-center text-base font-bold
+      bg-brand-gold text-brand-teal-dark shadow-md transition hover:-translate-y-0.5 hover:shadow-lg
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-brand-teal bg-white px-5 py-2.5
+      text-sm font-semibold text-brand-teal transition hover:bg-brand-surface focus:outline-none
+      focus-visible:ring-2 focus-visible:ring-brand-sky focus-visible:ring-offset-2;
+  }
+
+  /* Tighter serif lockups on large display headings */
+  .heading-display {
+    @apply leading-tight tracking-tight md:tracking-tighter;
+  }
+}

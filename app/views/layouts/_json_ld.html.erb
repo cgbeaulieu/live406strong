@@ -1,0 +1,20 @@
+<script type="application/ld+json">
+<%= ({
+  "@context" => "https://schema.org",
+  "@type" => "LocalBusiness",
+  "name" => "406 Strong",
+  "description" => "ACSM-certified personal training, STOTT PILATES, TRX, and lifestyle coaching in Whitefish, Montana. In-studio and virtual sessions.",
+  "url" => request.base_url,
+  "image" => image_url("406icon.png"),
+  "email" => "sally@406strong.com",
+  "address" => {
+    "@type" => "PostalAddress",
+    "streetAddress" => "1250 Baker Ave",
+    "addressLocality" => "Whitefish",
+    "addressRegion" => "MT",
+    "postalCode" => "59937",
+    "addressCountry" => "US"
+  },
+  "areaServed" => "Flathead Valley, Montana"
+}.to_json).html_safe %>
+</script>
