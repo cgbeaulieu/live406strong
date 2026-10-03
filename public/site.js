@@ -1,170 +1,186 @@
-// 406 Strong — small progressive enhancements. The site works without JavaScript.
+// 406 Strong — progressive enhancements. Every feature degrades gracefully without JavaScript.
 
-// Mobile menu
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Header: solid background once the page scrolls.
 (() => {
-  const toggle = document.querySelector("[data-menu-toggle]");
-  const panel = document.getElementById("mobile-nav");
-  if (!toggle || !panel) return;
+  const header = document.querySelector("[data-header]");
+  if (!header) return;
+  const update = () => header.toggleAttribute("data-scrolled", scrollY > 8);
+  update();
+  addEventListener("scroll", update, { passive: true });
+})();
+
+// Mobile menu sheet: focus moves in, Escape closes, focus returns to the button.
+(() => {
+  const menu = document.querySelector("[data-menu]");
+  const openBtn = document.querySelector("[data-menu-open]");
+  if (!menu || !openBtn) return;
+  const closeBtn = menu.querySelector("[data-menu-close]");
 
   const setOpen = (open) => {
-    panel.hidden = !open;
-    toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    toggle.querySelector('[data-menu-icon="open"]').classList.toggle("hidden", open);
-    toggle.querySelector('[data-menu-icon="close"]').classList.toggle("hidden", !open);
+    menu.toggleAttribute("data-open", open);
+    openBtn.setAttribute("aria-expanded", String(open));
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open) closeBtn.focus();
   };
 
-  toggle.addEventListener("click", () => setOpen(panel.hidden));
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !panel.hidden) {
-      setOpen(false);
-      toggle.focus();
-    }
+  openBtn.addEventListener("click", () => setOpen(true));
+  closeBtn.addEventListener("click", () => { setOpen(false); openBtn.focus(); });
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  menu.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { setOpen(false); openBtn.focus(); }
+    if (e.key !== "Tab") return;
+    const focusable = [...menu.querySelectorAll("a, button")];
+    const [first, last] = [focusable[0], focusable[focusable.length - 1]];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
-  matchMedia("(min-width: 768px)").addEventListener("change", (e) => e.matches && setOpen(false));
+  matchMedia("(min-width: 1024px)").addEventListener("change", (e) => e.matches && setOpen(false));
 })();
 
-// Hero slideshow: crossfades background photos. Pauses on hover/focus, when the tab is hidden,
-// via the pause button (WCAG 2.2.2), and never autoplays for prefers-reduced-motion.
+// Reveal-on-scroll (CSS only hides elements when JS is on and motion is allowed).
+// Content must never stay hidden: anything on screen at load shows immediately, keyboard
+// focus reveals its section, and a safety timer reveals everything if observers never fire.
 (() => {
-  const root = document.querySelector("[data-carousel]");
-  if (!root) return;
-
-  const slides = [...root.querySelectorAll("[data-slide]")];
-  const dots = [...root.querySelectorAll("[data-dots] button")];
-  const pauseBtn = root.querySelector("[data-pause]");
-  const interval = Number(root.dataset.interval) || 7000;
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  let current = 0;
-  let timer = null;
-  let userPaused = reducedMotion;
-  let hovering = false;
-
-  const show = (index) => {
-    current = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      const active = i === current;
-      slide.classList.toggle("opacity-0", !active);
-      slide.setAttribute("aria-hidden", String(!active));
-      const img = slide.querySelector("img");
-      if (active && !reducedMotion) {
-        // Restart the slow zoom on the incoming photo.
-        img.classList.remove("animate-hero-zoom");
-        void img.offsetWidth;
-        img.classList.add("animate-hero-zoom");
+  const items = [...document.querySelectorAll(".reveal")];
+  const show = (el) => el.classList.add("is-visible");
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    items.forEach(show);
+    return;
+  }
+  let observerAlive = false;
+  const io = new IntersectionObserver((entries) => {
+    observerAlive = true;
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        show(entry.target);
+        io.unobserve(entry.target);
       }
-    });
-    dots.forEach((dot, i) => {
-      const active = i === current;
-      dot.classList.toggle("w-10", active);
-      dot.classList.toggle("bg-white", active);
-      dot.classList.toggle("w-5", !active);
-      dot.classList.toggle("bg-white/40", !active);
-      if (active) dot.setAttribute("aria-current", "true");
-      else dot.removeAttribute("aria-current");
-    });
-  };
-
-  const stop = () => {
-    clearInterval(timer);
-    timer = null;
-  };
-  const start = () => {
-    stop();
-    if (!userPaused && !hovering && !document.hidden) {
-      timer = setInterval(() => show(current + 1), interval);
     }
-  };
-
-  const updatePauseButton = () => {
-    pauseBtn.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
-    pauseBtn.querySelector('[data-icon="pause"]').classList.toggle("hidden", userPaused);
-    pauseBtn.querySelector('[data-icon="play"]').classList.toggle("hidden", !userPaused);
-  };
-
-  dots.forEach((dot, i) => dot.addEventListener("click", () => { show(i); start(); }));
-  pauseBtn.addEventListener("click", () => {
-    userPaused = !userPaused;
-    updatePauseButton();
-    start();
-  });
-  root.addEventListener("mouseenter", () => { hovering = true; stop(); });
-  root.addEventListener("mouseleave", () => { hovering = false; start(); });
-  root.addEventListener("focusin", () => { hovering = true; stop(); });
-  root.addEventListener("focusout", (e) => {
-    if (!root.contains(e.relatedTarget)) { hovering = false; start(); }
-  });
-  document.addEventListener("visibilitychange", start);
-
-  updatePauseButton();
-  start();
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  for (const el of items) {
+    if (el.getBoundingClientRect().top < innerHeight) setTimeout(() => show(el), 30);
+    else io.observe(el);
+  }
+  document.addEventListener("focusin", (e) => e.target.closest?.(".reveal") && show(e.target.closest(".reveal")));
+  // A healthy observer reports every element once right away; if it never does, show everything.
+  setTimeout(() => observerAlive || items.forEach(show), 2500);
 })();
 
-// Contact form: submits to Formspree in the background. If no Formspree form ID is
-// configured yet (empty action), falls back to opening the visitor's email app.
+// Scrollspy: underline the nav link for the section in view.
+(() => {
+  const links = new Map([...document.querySelectorAll("[data-spy]")].map((a) => [a.dataset.spy, a]));
+  if (!links.size) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const link = links.get(entry.target.id);
+      if (!link) continue;
+      if (entry.isIntersecting) {
+        links.forEach((l) => l.removeAttribute("aria-current"));
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    }
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  links.forEach((_, id) => {
+    const section = document.getElementById(id);
+    if (section) io.observe(section);
+  });
+})();
+
+// Mobile call-to-action bar: appears after the hero, steps aside at the contact form.
+(() => {
+  const bar = document.querySelector("[data-cta-bar]");
+  const hero = document.getElementById("top");
+  const contact = document.getElementById("contact");
+  if (!bar || !hero || !contact) return;
+  let pastHero = false;
+  let atContact = false;
+  const update = () => {
+    const show = pastHero && !atContact;
+    bar.toggleAttribute("data-show", show);
+    bar.inert = !show;
+  };
+  update();
+  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; update(); }).observe(hero);
+  new IntersectionObserver(([e]) => { atContact = e.isIntersecting; update(); }).observe(contact);
+})();
+
+// Contact form: sends to Formspree in the background. Until a Formspree ID is configured
+// (empty action), it opens the visitor's email app with the message ready to send.
 (() => {
   const form = document.querySelector("[data-contact-form]");
   if (!form) return;
 
   const status = form.querySelector("[data-form-status]");
+  const label = form.querySelector("[data-submit-label]");
   const button = form.querySelector('button[type="submit"]');
-  const STATUS_STYLES = {
+  const STYLES = {
     success: "border-emerald-200 bg-emerald-50 text-emerald-900",
     error: "border-red-200 bg-red-50 text-red-900",
   };
 
   const setStatus = (kind, message) => {
-    status.className = `rounded-xl border px-4 py-3 text-sm font-medium ${STATUS_STYLES[kind]}`;
+    status.className = `mt-6 rounded-2xl border px-5 py-4 text-sm font-medium ${STYLES[kind]}`;
     status.textContent = message;
   };
 
-  const validate = () => {
-    let firstInvalid = null;
-    for (const field of form.querySelectorAll("[required]")) {
-      const ok = field.value.trim() !== "" && field.checkValidity();
-      field.setAttribute("aria-invalid", String(!ok));
-      if (!ok && !firstInvalid) firstInvalid = field;
-    }
-    if (firstInvalid) {
-      setStatus("error", "Please fill in your name, a valid email, and a message.");
-      firstInvalid.focus();
-      return false;
-    }
-    return true;
+  // Validate on blur once a field has been touched, and everything on submit.
+  const check = (field) => {
+    const ok = field.value.trim() !== "" && field.checkValidity();
+    field.setAttribute("aria-invalid", String(!ok));
+    return ok;
   };
+  form.querySelectorAll("[required]").forEach((field) => {
+    field.addEventListener("blur", () => field.value && check(field));
+    field.addEventListener("input", () => field.getAttribute("aria-invalid") === "true" && check(field));
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    const invalid = [...form.querySelectorAll("[required]")].filter((f) => !check(f));
+    if (invalid.length) {
+      setStatus("error", "Please add your name and a valid email so Sally can reply.");
+      invalid[0].focus();
+      return;
+    }
 
     const data = new FormData(form);
+    const interests = data.getAll("interests");
+    data.delete("interests");
+    data.set("interests", interests.join(", ") || "Not specified");
 
     if (!form.getAttribute("action")) {
-      const subject = `406 Strong — ${data.get("interest") || "Website contact"}`;
-      const body = `${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`;
-      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      setStatus("success", "Your email app should open with your message ready to send.");
+      const body = [
+        `Hi Sally,`,
+        ``,
+        data.get("message") || "I'd like to set up a free consultation.",
+        ``,
+        `Interested in: ${data.get("interests")}`,
+        data.get("phone") ? `Phone: ${data.get("phone")}` : "",
+        ``,
+        `— ${data.get("name")}`,
+      ].filter((line, i, all) => line !== "" || all[i - 1] !== "").join("\n");
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent("Free consultation request")}&body=${encodeURIComponent(body)}`;
+      setStatus("success", "Your email app should open with your note ready to send.");
       return;
     }
 
     button.disabled = true;
-    button.textContent = "Sending…";
+    label.textContent = "Sending…";
     try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
-      });
+      const response = await fetch(form.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       form.reset();
       form.querySelectorAll("[aria-invalid]").forEach((f) => f.removeAttribute("aria-invalid"));
-      setStatus("success", "Thank you—your message is on its way. Sally will reply within one to two business days.");
+      setStatus("success", `Thank you, ${data.get("name").split(" ")[0]}! Your note is on its way. Sally will reply personally, usually within one to two business days.`);
     } catch {
-      setStatus("error", `Sorry, that didn't go through. Please try again or email ${form.dataset.email}.`);
+      setStatus("error", `Sorry, that didn't go through. Please try again, or email ${form.dataset.email}.`);
     } finally {
       button.disabled = false;
-      button.textContent = "Send message";
+      label.textContent = "Send to Sally";
     }
   });
 })();

@@ -1,42 +1,52 @@
-<footer class="bg-brand-teal-darkest text-white/80">
-  <div class="container-site grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
-    <div>
-      <p class="font-serif text-3xl font-bold text-white">406 Strong</p>
-      <p class="mt-3 max-w-sm text-sm leading-relaxed">Personal training, STOTT PILATES<sup>&reg;</sup>, TRX, and lifestyle coaching in Whitefish, Montana&mdash;in studio or virtual.</p>
-      <div class="mt-6 flex gap-3" aria-label="Social and contact">
-        <a class="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand-gold hover:text-brand-teal-darkest" href="mailto:{{email}}" aria-label="Email Sally">
-          <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>
-        </a>
-        <a class="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand-gold hover:text-brand-teal-darkest" href="https://www.facebook.com/fit4montana" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-1c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-        </a>
-        <a class="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand-gold hover:text-brand-teal-darkest" href="https://www.pinterest.com/sallybeaulieu/" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
-          <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12c0 4.84 3.44 8.87 8 9.8-.13-.56-.25-1.41-.19-2.01.21-1.63 1.38-6.95 1.38-6.95s-.35-.7-.35-1.73c0-1.62.94-2.83 2.11-2.83 1 0 1.48.75 1.48 1.65 0 1-.63 2.49-.96 3.88-.27 1.16.58 2.11 1.73 2.11 2.08 0 3.68-2.19 3.68-5.35 0-2.8-2.01-4.76-4.89-4.76-3.33 0-5.28 2.5-5.28 5.08 0 1 .39 2.09 1.08 2.69.12.14.14.26.1.4l-.16.63c-.05.22-.18.27-.41.16-1.54-.72-2.5-2.97-2.5-4.78 0-3.9 2.83-7.48 8.16-7.48 4.29 0 7.62 3.06 7.62 7.15 0 4.26-2.69 7.7-6.42 7.7-1.25 0-2.43-.65-2.83-1.42l-.77 2.94c-.28 1.07-1.04 2.41-1.55 3.23 1.17.36 2.41.56 3.7.56 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
-        </a>
-        <a class="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand-gold hover:text-brand-teal-darkest" href="https://www.bigvalleyradio.com/OurShows/Fit4Montana.aspx" target="_blank" rel="noopener noreferrer" aria-label="Fit 4 Montana on Big Valley Radio">
-          <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h2v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-3v8h2c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
-        </a>
+<footer class="relative overflow-hidden bg-ink text-mist">
+  <img src="{{root}}images/topo.svg" alt="" class="topo-fade pointer-events-none absolute -top-40 -right-40 w-[900px] max-w-none opacity-[0.12] invert" aria-hidden="true">
+
+  <div class="wrap relative pt-20 pb-10 md:pt-28">
+    <div class="flex flex-col items-start justify-between gap-10 border-b border-white/10 pb-16 md:flex-row md:items-end">
+      <p class="max-w-xl font-display text-5xl leading-[1.05] text-paper md:text-6xl">Strong for <em class="text-gold">every&nbsp;season.</em></p>
+      <a href="{{root}}#contact" class="btn btn-primary">Book a free consultation <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+
+    <div class="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <svg viewBox="-10 -10 763 451" class="h-14 w-auto" aria-hidden="true">
+          <path d="{{montana}}" fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="round" class="text-paper/80"/>
+          <path transform="translate(125 86) scale(7.5)" d="M0-3C-1.6-6.4-7-6-7-1.6-7 2 0 6.5 0 6.5S7 2 7-1.6C7-6 1.6-6.4 0-3Z" fill="#f7bf33"/>
+        </svg>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed">Personal training, STOTT PILATES<sup>&reg;</sup>, TRX, and lifestyle coaching with Sally Beaulieu. In studio in Whitefish, or virtual from anywhere.</p>
+      </div>
+      <div>
+        <h2 class="font-sans text-xs font-semibold tracking-[0.16em] text-gold uppercase">Studio</h2>
+        <address class="mt-4 text-sm leading-relaxed not-italic">
+          1250 Baker Ave<br>Whitefish, MT 59937<br>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=1250+Baker+Ave+Whitefish+MT+59937" class="mt-2 inline-block text-paper underline decoration-white/30 hover:decoration-gold" target="_blank" rel="noopener">Get directions</a>
+        </address>
+      </div>
+      <div>
+        <h2 class="font-sans text-xs font-semibold tracking-[0.16em] text-gold uppercase">Contact</h2>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="mailto:{{email}}" class="text-paper no-underline hover:underline">{{email}}</a></li>
+          <li><a href="{{root}}#contact" class="text-paper no-underline hover:underline">Book a free consultation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-sans text-xs font-semibold tracking-[0.16em] text-gold uppercase">Follow</h2>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="https://www.facebook.com/fit4montana" class="text-paper no-underline hover:underline" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.pinterest.com/sallybeaulieu/" class="text-paper no-underline hover:underline" target="_blank" rel="noopener">Pinterest</a></li>
+        </ul>
       </div>
     </div>
 
-    <div>
-      <p class="text-xs font-bold tracking-[0.18em] text-brand-gold uppercase">Studio</p>
-      <address class="mt-3 text-sm leading-relaxed not-italic">
-        1250 Baker Ave<br>Whitefish, MT 59937<br>
-        <a href="mailto:{{email}}" class="text-white hover:text-brand-gold">{{email}}</a>
-      </address>
+    <div class="flex flex-col gap-2 border-t border-white/10 pt-8 text-xs text-mist/80 sm:flex-row sm:justify-between">
+      <p>&copy; {{year}} 406 Strong &middot; Whitefish, Montana</p>
+      <p>ACSM Certified Personal Trainer &middot; Fully insured</p>
     </div>
-
-    <nav aria-label="Footer">
-      <p class="text-xs font-bold tracking-[0.18em] text-brand-gold uppercase">Explore</p>
-      <ul class="mt-3 space-y-2 text-sm">
-        <li><a href="{{root}}index.html" class="text-white/80 no-underline hover:text-white">Home</a></li>
-        <li><a href="{{root}}about.html" class="text-white/80 no-underline hover:text-white">About Sally</a></li>
-        <li><a href="{{root}}contact.html" class="text-white/80 no-underline hover:text-white">Free consultation</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="border-t border-white/10">
-    <p class="container-site py-6 text-xs text-white/60">&copy; {{year}} 406 Strong &middot; Whitefish, Montana</p>
   </div>
 </footer>
+
+<!-- Mobile: persistent call to action once the hero has scrolled away -->
+<div class="fixed inset-x-0 bottom-0 z-40 translate-y-full p-3 transition-transform duration-500 ease-out-soft data-[show]:translate-y-0 sm:hidden"
+     style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom))" data-cta-bar>
+  <a href="{{root}}#contact" class="btn btn-primary w-full">Book a free consultation <span class="arrow" aria-hidden="true">&rarr;</span></a>
+</div>

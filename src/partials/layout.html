@@ -1,51 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{{title}}</title>
   <meta name="description" content="{{description}}">
   <meta name="robots" content="{{robots}}">
-  <meta name="theme-color" content="#015778">
+  <meta name="theme-color" content="#f6f1e8">
   <link rel="canonical" href="{{pageUrl}}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="406 Strong">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
   <meta property="og:url" content="{{pageUrl}}">
   <meta property="og:image" content="{{siteUrl}}/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sally Beaulieu in front of a Montana-shaped mountain landscape. Strong for every season.">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="{{root}}images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="{{root}}favicon.ico" sizes="32x32">
-  <link rel="apple-touch-icon" href="{{root}}images/406icon.png">
+  <link rel="apple-touch-icon" href="{{root}}images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Josefin+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&display=swap" media="print" onload="this.media=&#39;all&#39;">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&display=swap"></noscript>
   <link rel="stylesheet" href="{{root}}styles.css">
+  <script>document.documentElement.classList.replace("no-js", "js")</script>
+  <script src="{{root}}site.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "406 Strong",
-    "description": "ACSM-certified personal training, STOTT PILATES, TRX, and lifestyle coaching in Whitefish, Montana. In-studio and virtual sessions.",
-    "url": "{{siteUrl}}/",
-    "image": "{{siteUrl}}/images/og-image.jpg",
-    "email": "{{email}}",
-    "founder": { "@type": "Person", "name": "Sally Beaulieu", "jobTitle": "Certified Personal Trainer" },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "1250 Baker Ave",
-      "addressLocality": "Whitefish",
-      "addressRegion": "MT",
-      "postalCode": "59937",
-      "addressCountry": "US"
-    },
-    "areaServed": "Flathead Valley, Montana"
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "{{siteUrl}}/#business",
+        "name": "406 Strong",
+        "description": "Personal training, STOTT PILATES, TRX, and lifestyle coaching with Sally Beaulieu in Whitefish, Montana. In studio and virtual.",
+        "url": "{{siteUrl}}/",
+        "image": "{{siteUrl}}/images/og-image.jpg",
+        "logo": "{{siteUrl}}/images/icon-512.png",
+        "email": "{{email}}",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1250 Baker Ave",
+          "addressLocality": "Whitefish",
+          "addressRegion": "MT",
+          "postalCode": "59937",
+          "addressCountry": "US"
+        },
+        "areaServed": ["Whitefish", "Flathead Valley", "Montana"],
+        "founder": { "@id": "{{siteUrl}}/#sally" },
+        "sameAs": ["https://www.facebook.com/fit4montana", "https://www.pinterest.com/sallybeaulieu/"]
+      },
+      {
+        "@type": "Person",
+        "@id": "{{siteUrl}}/#sally",
+        "name": "Sally Beaulieu",
+        "jobTitle": "Certified Personal Trainer",
+        "worksFor": { "@id": "{{siteUrl}}/#business" },
+        "hasCredential": [
+          { "@type": "EducationalOccupationalCredential", "name": "ACSM Certified Personal Trainer" },
+          { "@type": "EducationalOccupationalCredential", "name": "STOTT PILATES Instructor" },
+          { "@type": "EducationalOccupationalCredential", "name": "TRX Suspension Training" }
+        ]
+      }
+    ]
   }
   </script>
-  <script src="{{root}}site.js" defer></script>
 </head>
-<body>
-  <a href="#main" class="sr-only z-[100] rounded-lg bg-white px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to main content</a>
+<body class="min-h-svh">
+  <a href="#main" class="sr-only z-[100] rounded-full bg-ink px-5 py-3 font-semibold text-paper no-underline focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to content</a>
   {{> header}}
   <main id="main" tabindex="-1" class="outline-none">
 {{content}}

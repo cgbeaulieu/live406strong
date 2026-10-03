@@ -4,26 +4,37 @@ Website for **406 Strong**, Sally Beaulieu's personal training studio in Whitefi
 
 **Live site:** https://cgbeaulieu.github.io/live406strong/
 
-It's a plain static site: HTML pages, [Tailwind CSS](https://tailwindcss.com/), and a small amount of vanilla JavaScript. There is no server or database. Pushing to `main` rebuilds and publishes it automatically via GitHub Actions.
+A single-page static site: HTML, [Tailwind CSS](https://tailwindcss.com/), and a little vanilla JavaScript. There is no server or database. Pushing to `main` rebuilds and publishes it automatically via GitHub Actions.
+
+## Design
+
+- **Concept: "Strong for every season."** Montana's seasons, and staying strong through every season of life, which is Sally's own philosophy.
+- **The Montana window.** The hero frames mountains inside the Montana silhouette (traced from the logo into `src/montana-path.txt`), with Sally stepping out of it and the logo's gold heart marking Whitefish.
+- **Palette.** Glacier ink `#0e2a33`, brand teal `#015778`, trailhead sand `#f6f1e8`, and logo gold `#f7bf33`. Every text color pair passes WCAG AA.
+- **Type.** Fraunces (display) and Figtree (body), from Google Fonts.
+- **Texture.** Generated topographic contour lines (`public/images/topo.svg`), a nod to trail maps.
+- **Real people only.** Photos of Sally, her hiking group, and Montana lakes come from the original site, and the testimonials are real client words.
+
+Sections, in order: hero → credentials → "Sound familiar?" → Ways to train → How it starts → Meet Sally → Client stories → Beyond the studio → FAQ → Contact.
 
 ## Editing
 
 | To change… | Edit |
 | --- | --- |
-| Home / About / Contact page text | `src/pages/index.html`, `about.html`, `contact.html` |
-| Header, footer, or the yellow "Ready to feel strong?" band | `src/partials/header.html`, `footer.html`, `cta.html` |
-| Page `<head>` (fonts, SEO tags) | `src/partials/layout.html` |
-| Colors and fonts | `src/styles.css` (the `@theme` block) |
-| Menu, slideshow, and contact form behavior | `public/site.js` |
+| Any page text, photos, FAQ answers, testimonials | `src/pages/index.html` (each section is labeled with a comment) |
+| Header, mobile menu, footer | `src/partials/header.html`, `footer.html` |
+| Page `<head>` (fonts, SEO, link-preview tags) | `src/partials/layout.html` |
+| Colors, fonts, buttons, form fields | `src/styles.css` (the `@theme` block holds the palette) |
+| Menu, scroll effects, mobile call-to-action bar, contact form | `public/site.js` |
 | Site URL, email address, Formspree form ID | `site.config.json` |
+| The "page not found" page | `src/pages/404.html` |
 
-Each page starts with a small header block for its browser title and search description:
+Each page starts with a small header block:
 
 ```html
 ---
-title: About Sally Beaulieu | 406 Strong | Whitefish, MT
-description: Shown in Google results and link previews.
-nav: about
+title: Shown in the browser tab and Google results
+description: Shown under the title in Google results and link previews.
 ---
 ```
 
@@ -38,13 +49,13 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:4000. The page rebuilds whenever you save a file (refresh the browser to see changes).
+Then open http://localhost:4000. The site rebuilds whenever you save a file (refresh the browser to see changes).
 
 `npm run build` writes the finished site to `dist/`.
 
 ## Photos
 
-Original, full-size photos live in `images-src/`. The site uses resized WebP copies in `public/images/`. To add or replace a photo, drop the original in `images-src/`, add it to the list in `scripts/optimize-images.mjs`, and run:
+Original, full-size photos live in `images-src/`. The site uses resized WebP copies in `public/images/`. The same pipeline generates the favicon, the link-preview card (`og-image.jpg`), and the topographic texture. To add or replace a photo, drop the original in `images-src/`, add it to `scripts/optimize-images.mjs`, and run:
 
 ```bash
 npm run images
@@ -58,7 +69,7 @@ The form sends submissions through [Formspree](https://formspree.io) (free tier:
 2. Create a new form and copy its ID (the part after `/f/` in the endpoint, e.g. `xyzabcd`).
 3. Put it in `site.config.json` as `"formspreeId": "xyzabcd"` and push.
 
-Until a form ID is set, pressing **Send** opens the visitor's own email app with the message pre-filled and addressed to Sally.
+Until a form ID is set, pressing **Send to Sally** opens the visitor's own email app with their note pre-filled and addressed to Sally.
 
 ## Custom domain
 

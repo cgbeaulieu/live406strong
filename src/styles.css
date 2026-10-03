@@ -4,87 +4,158 @@
 @source "./partials";
 @source "../public/site.js";
 
+/* ------------------------------------------------------------------
+   406 Strong design tokens
+   Palette: Glacier-country — deep lake ink, brand teal, trailhead sand,
+   and the gold heart from the logo. All text pairs pass WCAG AA.
+------------------------------------------------------------------- */
 @theme {
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Josefin Slab", ui-serif, Georgia, serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-teal: #015778;
-  --color-brand-teal-dark: #013d54;
-  --color-brand-teal-darkest: #012c3d;
-  --color-brand-sky: #27a8df;
-  --color-brand-gold: #ffb700;
-  --color-brand-gold-light: #ffd054;
-  --color-brand-gold-deep: #e6a200;
-  --color-brand-text: #2f3437;
-  --color-brand-muted: #566067;
-  --color-brand-surface: #f4f8fa;
-  --color-brand-sand: #fbf7ef;
+  --color-ink: #0e2a33;
+  --color-teal: #015778;
+  --color-teal-light: #2f7e9b;
+  --color-sky: #27a8df;
+  --color-gold: #f7bf33;
+  --color-gold-light: #ffd469;
+  --color-gold-text: #8a5a00;
+  --color-paper: #f6f1e8;
+  --color-sand: #ece3d3;
+  --color-mist: #c3d0d3;
+  --color-muted: #3d545c;
 
-  --animate-hero-zoom: hero-zoom 12s ease-out both;
-  @keyframes hero-zoom {
-    from { transform: scale(1.08); }
-    to { transform: scale(1); }
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-soft) infinite;
+  @keyframes pulse-ring {
+    0% { transform: scale(0.6); opacity: 0.7; }
+    100% { transform: scale(2.4); opacity: 0; }
   }
 }
 
 @layer base {
   html {
-    @apply scroll-smooth antialiased;
-    scroll-padding-top: 5rem;
+    @apply scroll-smooth bg-paper antialiased;
+    scroll-padding-top: 5.5rem;
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-white font-sans text-base leading-relaxed text-brand-text;
+    @apply bg-paper font-sans text-[1.0625rem] leading-relaxed text-ink;
+    font-optical-sizing: auto;
   }
   h1, h2, h3 {
-    @apply font-serif font-semibold text-balance text-brand-teal;
+    @apply font-display font-normal text-balance text-ink;
+    font-variation-settings: "SOFT" 60, "WONK" 0;
   }
-  p {
-    @apply text-pretty;
-  }
-  a {
-    @apply text-brand-teal underline-offset-4;
-  }
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-sky;
-  }
+  p { @apply text-pretty; }
+  em { font-variation-settings: "SOFT" 100, "WONK" 1; }
+  a { @apply text-teal underline-offset-4; }
+  ::selection { @apply bg-gold/60 text-ink; }
+  :focus-visible { @apply rounded-sm outline-3 outline-offset-3 outline-sky; }
 }
 
 @layer components {
-  .container-site {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
-  }
+  .wrap { @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8; }
+
   .eyebrow {
-    @apply text-xs font-bold tracking-[0.18em] text-brand-gold-deep uppercase;
+    @apply inline-flex items-center gap-2 text-[0.8125rem] font-semibold tracking-[0.14em] text-teal uppercase;
   }
-  .heading-display {
-    @apply leading-[1.1] tracking-tight;
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 bg-current;
   }
-  .btn-brand {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-gold px-7 py-3 text-base font-bold
-      text-brand-teal-darkest no-underline shadow-md shadow-brand-gold/30 transition
-      hover:-translate-y-0.5 hover:bg-brand-gold-light hover:shadow-lg motion-reduce:hover:translate-y-0;
+  .eyebrow-light { @apply text-gold; }
+
+  .h-section { @apply text-[2.5rem] leading-[1.05] tracking-[-0.02em] sm:text-5xl md:text-[3.5rem]; }
+  .lede { @apply text-lg leading-relaxed text-muted md:text-xl; }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 text-base font-semibold
+      no-underline transition duration-300 ease-out-soft select-none;
   }
-  .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-teal/80 px-6 py-2.5
-      text-sm font-semibold text-brand-teal no-underline transition hover:border-brand-teal hover:bg-brand-teal
-      hover:text-white;
+  .btn-primary {
+    @apply bg-gold text-ink hover:-translate-y-0.5 hover:bg-gold-light active:translate-y-0 motion-reduce:hover:translate-y-0;
+    box-shadow: 0 10px 24px -10px rgb(247 191 51 / 0.9);
   }
-  .nav-link {
-    @apply rounded-full px-4 py-2 text-sm font-semibold text-brand-teal no-underline transition-colors
-      hover:bg-brand-surface;
+  .btn-primary:hover { box-shadow: 0 16px 32px -12px rgb(201 145 0 / 0.75); }
+  .btn-dark { @apply bg-ink text-paper hover:bg-teal; }
+  .btn-ghost { @apply border border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-paper; }
+  .btn .arrow { @apply transition-transform duration-300 ease-out-soft; }
+  .btn:hover .arrow { @apply translate-x-1; }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-2 font-semibold text-ink no-underline decoration-gold decoration-2
+      underline-offset-[6px] hover:underline;
   }
-  .nav-link[aria-current="page"] {
-    @apply bg-brand-surface text-brand-teal-darkest;
+
+  .card { @apply rounded-[1.75rem] bg-white/70 ring-1 ring-ink/8; }
+
+  /* Montana-shaped photo window */
+  .montana-window {
+    -webkit-mask: url("images/montana.svg") center / 100% 100% no-repeat;
+    mask: url("images/montana.svg") center / 100% 100% no-repeat;
   }
+  /* Topographic texture dissolves at its edges instead of ending in a hard line */
+  .topo-fade {
+    -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent);
+    mask-image: radial-gradient(closest-side, #000 55%, transparent);
+  }
+  /* Soft fade so Sally's crop line doesn't read as a hard cut */
+  .fade-bottom {
+    -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  }
+
+  .chip-check { @apply relative; }
+  .chip-check input { @apply absolute inset-0 cursor-pointer opacity-0; }
+  .chip-check span {
+    @apply inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/15 bg-white px-4 text-sm font-medium
+      text-ink transition peer-checked:border-teal peer-checked:bg-teal peer-checked:text-white
+      peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-sky;
+  }
+  .chip-check span::before {
+    content: "+";
+    @apply -ml-0.5 text-base leading-none font-semibold opacity-60;
+  }
+  .chip-check input:checked + span::before { content: "✓"; @apply opacity-100; }
+
   .field {
-    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-brand-text shadow-sm
-      transition outline-none placeholder:text-slate-400 focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/20
-      aria-invalid:border-red-400;
+    @apply block w-full rounded-2xl border border-ink/15 bg-white px-4 py-3.5 text-base text-ink transition outline-none placeholder:text-muted/60 focus:border-teal focus:ring-4 focus:ring-teal/15
+      aria-invalid:border-red-500 aria-invalid:ring-red-500/15;
   }
+  .label { @apply mb-2 block text-sm font-semibold text-ink; }
+
+  .nav-link {
+    @apply relative px-1 py-2 text-[0.9375rem] font-medium text-ink/75 no-underline transition-colors hover:text-ink;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute inset-x-1 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-gold transition-transform duration-300;
+  }
+  .nav-link:hover::after, .nav-link[aria-current="true"]::after { @apply scale-x-100; }
+  .nav-link[aria-current="true"] { @apply text-ink; }
+
+  /* FAQ accordion (native <details>) */
+  .faq summary { @apply cursor-pointer list-none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq .faq-icon { @apply transition-transform duration-300 ease-out-soft; }
+  .faq[open] .faq-icon { @apply rotate-45; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-hero-zoom {
-    animation: none;
+/* Scroll reveal — only when JS is running, and never for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.8s var(--ease-out-soft), transform 0.8s var(--ease-out-soft);
+    transition-delay: var(--delay, 0ms);
+  }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
+
+  .faq[open] .faq-body { animation: faq-open 0.35s var(--ease-out-soft); }
+  @keyframes faq-open {
+    from { opacity: 0; transform: translateY(-6px); }
   }
 }

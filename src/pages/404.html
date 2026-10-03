@@ -1,12 +1,16 @@
 ---
-title: Page not found | 406 Strong
-description: The page you were looking for doesn't exist.
+title: Off trail · 406 Strong
+description: This page doesn't exist.
 ---
-<section class="py-28 md:py-36">
-  <div class="container-site text-center">
-    <p class="font-serif text-8xl font-bold text-brand-gold">404</p>
-    <h1 class="heading-display mt-4 text-4xl md:text-5xl">This trail doesn&rsquo;t go anywhere.</h1>
-    <p class="mx-auto mt-4 max-w-md text-lg text-brand-muted">The page you were looking for has moved or never existed. Let&rsquo;s get you back on track.</p>
-    <a href="{{root}}index.html" class="btn-brand mt-8">Back to home</a>
+<section class="relative isolate flex min-h-[80svh] items-center overflow-hidden pt-24 pb-20">
+  <img src="{{root}}images/topo.svg" alt="" aria-hidden="true" class="topo-fade pointer-events-none absolute -top-20 -right-60 -z-10 w-[1100px] max-w-none opacity-[0.16]">
+  <div class="wrap">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="mt-6 text-6xl leading-[0.98] tracking-[-0.03em] md:text-8xl">You&rsquo;ve wandered <em class="text-teal">off&nbsp;trail.</em></h1>
+    <p class="lede mt-7 max-w-lg">This page doesn&rsquo;t exist&mdash;but the trailhead does.</p>
+    <div class="mt-10 flex flex-wrap items-center gap-x-7 gap-y-4">
+      <a href="{{root}}" class="btn btn-primary">Back to the trailhead <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <a href="{{root}}#contact" class="link-arrow">Contact Sally</a>
+    </div>
   </div>
 </section>

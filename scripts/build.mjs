@@ -15,6 +15,7 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 
 const config = JSON.parse(await readFile("site.config.json", "utf8"));
+const montana = (await readFile("src/montana-path.txt", "utf8")).trim();
 const DIST = "dist";
 
 const partials = {};
@@ -63,6 +64,7 @@ async function build() {
 
     const vars = {
       ...config,
+      montana,
       year: String(new Date().getFullYear()),
       formAction: config.formspreeId ? `https://formspree.io/f/${config.formspreeId}` : "",
       root: isNotFound ? config.basePath : "",
