@@ -1,1 +1,0 @@
-function HeaderController(n,t){n.isActive=function(n){return n===t.path()}}

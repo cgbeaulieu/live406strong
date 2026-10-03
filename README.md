@@ -1,84 +1,79 @@
-# 406 Strong — Website
+# 406 Strong
 
-Marketing site for **406 Strong** (Whitefish, MT), built with [Ruby on Rails](https://rubyonrails.org/).
+Website for **406 Strong**, Sally Beaulieu's personal training studio in Whitefish, Montana.
 
-## Stack
+**Live site:** https://cgbeaulieu.github.io/live406strong/
 
-| Layer | Technology |
+It's a plain static site: HTML pages, [Tailwind CSS](https://tailwindcss.com/), and a small amount of vanilla JavaScript. There is no server or database. Pushing to `main` rebuilds and publishes it automatically via GitHub Actions.
+
+## Editing
+
+| To change… | Edit |
 | --- | --- |
-| Framework | Rails **8.0** (minimal stack: no Active Storage, Action Cable, Mailbox, or Text) |
-| Ruby | **3.4.3** (see `.ruby-version`) |
-| Database | **SQLite** (development & test), **PostgreSQL** (production via `DATABASE_URL`) |
-| Frontend | Hotwire (**Turbo**, **Stimulus**), **Tailwind CSS**, **Importmap** (no Node bundler required for JS) |
-| Server | **Puma** |
-| Contact form | **mail_form** (SMTP delivery) |
+| Home / About / Contact page text | `src/pages/index.html`, `about.html`, `contact.html` |
+| Header, footer, or the yellow "Ready to feel strong?" band | `src/partials/header.html`, `footer.html`, `cta.html` |
+| Page `<head>` (fonts, SEO tags) | `src/partials/layout.html` |
+| Colors and fonts | `src/styles.css` (the `@theme` block) |
+| Menu, slideshow, and contact form behavior | `public/site.js` |
+| Site URL, email address, Formspree form ID | `site.config.json` |
 
-## Prerequisites
+Each page starts with a small header block for its browser title and search description:
 
-- Ruby 3.4.3 (use [rbenv](https://github.com/rbenv/rbenv), [asdf](https://asdf-vm.com/), or another version manager)
-- Bundler (`gem install bundler`)
-- SQLite (for local DB)
-- PostgreSQL client libraries only if you run production-like configs locally
-
-## Setup
-
-```bash
-bundle install
-cp .env.example .env
-# Edit .env if you need SMTP for the contact form locally — see Configuration.
-bin/rails db:prepare
+```html
+---
+title: About Sally Beaulieu | 406 Strong | Whitefish, MT
+description: Shown in Google results and link previews.
+nav: about
+---
 ```
 
-### Run the app locally
+`{{> header}}` pulls in a partial and `{{email}}` inserts a value from `site.config.json`.
 
-Use Foreman to run the web server and Tailwind watcher together:
+## Running it locally
 
-```bash
-bin/dev
-```
-
-Then open [http://localhost:3000](http://localhost:3000).
-
-Alternatively, run only the Rails server:
+Requires [Node.js](https://nodejs.org/) 20 or newer.
 
 ```bash
-bin/rails server
+npm install
+npm run dev
 ```
 
-(In that case run `bin/rails tailwindcss:watch` in another terminal if you change Tailwind styles.)
+Then open http://localhost:4000. The page rebuilds whenever you save a file (refresh the browser to see changes).
 
-## Routes
+`npm run build` writes the finished site to `dist/`.
 
-| Path | Purpose |
-| --- | --- |
-| `/` | Home |
-| `/about` | About |
-| `/contact` | Contact form (GET shows form, POST submits) |
+## Photos
 
-## Configuration
-
-Runtime settings are resolved through **`AppConfig`**: Rails encrypted credentials (when present), then `config/secrets.yml` legacy keys, then **environment variables**. Copy `.env.example` to `.env` and adjust.
-
-**Development:** `SECRET_KEY_BASE` defaults in code so you can boot without setting it. **Production:** `SECRET_KEY_BASE` is required.
-
-**Contact form (production):** set **`CONTACT_FORM_TO`** to the inbox that should receive submissions. **`CONTACT_FORM_FROM`** should be an address on a domain you control (SPF/DKIM). Optional: **`CONTACT_FORM_SUBJECT`**.
-
-**Outbound mail:** configure **`SMTP_ADDRESS`**, **`SMTP_PORT`**, **`SMTP_DOMAIN`**, **`SMTP_USERNAME`**, and **`SMTP_PASSWORD`** for your provider.
-
-**Optional analytics:** set **`GA_MEASUREMENT_ID`** (or the `ga4_measurement_id` credential) for GA4.
-
-See `.env.example` for **`APP_HOST`**, **`DATABASE_URL`**, **`RAILS_SERVE_STATIC_FILES`**, and platform hints (`HEROKU`, `RENDER`, `RAILWAY_ENVIRONMENT`, `FLY_APP_NAME`, **`ASSUME_SSL`**).
-
-## Tests
+Original, full-size photos live in `images-src/`. The site uses resized WebP copies in `public/images/`. To add or replace a photo, drop the original in `images-src/`, add it to the list in `scripts/optimize-images.mjs`, and run:
 
 ```bash
-bin/rails test
+npm run images
 ```
 
-Coverage is collected with SimpleCov when running tests.
+## Contact form
 
-## Deployment notes
+The form sends submissions through [Formspree](https://formspree.io) (free tier: 50 submissions/month), because GitHub Pages can't send email itself.
 
-- Production uses PostgreSQL; set **`DATABASE_URL`**.
-- Precompile assets for production builds as usual (`bin/rails assets:precompile`).
-- Ensure **`SECRET_KEY_BASE`**, **`CONTACT_FORM_TO`**, and SMTP settings are present in your hosting environment.
+1. Create a free Formspree account using the inbox that should receive messages.
+2. Create a new form and copy its ID (the part after `/f/` in the endpoint, e.g. `xyzabcd`).
+3. Put it in `site.config.json` as `"formspreeId": "xyzabcd"` and push.
+
+Until a form ID is set, pressing **Send** opens the visitor's own email app with the message pre-filled and addressed to Sally.
+
+## Custom domain
+
+To serve the site at `406strong.com` instead of the github.io address:
+
+1. In the repo's **Settings → Pages**, enter the custom domain.
+2. At the domain's DNS provider, point it at GitHub Pages ([instructions](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
+3. Update `siteUrl` in `site.config.json` to `https://406strong.com` and `basePath` to `/`.
+
+The same `dist/` output can also be deployed to Cloudflare Pages or Netlify unchanged (build command `npm run build`, output directory `dist`).
+
+## History
+
+This site began life as a Ruby on Rails app. That version is preserved under the `rails-archive` git tag:
+
+```bash
+git checkout rails-archive
+```

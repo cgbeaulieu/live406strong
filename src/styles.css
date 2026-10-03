@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@source "./pages";
+@source "./partials";
+@source "../public/site.js";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Josefin Slab", ui-serif, Georgia, serif;
+
+  --color-brand-teal: #015778;
+  --color-brand-teal-dark: #013d54;
+  --color-brand-teal-darkest: #012c3d;
+  --color-brand-sky: #27a8df;
+  --color-brand-gold: #ffb700;
+  --color-brand-gold-light: #ffd054;
+  --color-brand-gold-deep: #e6a200;
+  --color-brand-text: #2f3437;
+  --color-brand-muted: #566067;
+  --color-brand-surface: #f4f8fa;
+  --color-brand-sand: #fbf7ef;
+
+  --animate-hero-zoom: hero-zoom 12s ease-out both;
+  @keyframes hero-zoom {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-white font-sans text-base leading-relaxed text-brand-text;
+  }
+  h1, h2, h3 {
+    @apply font-serif font-semibold text-balance text-brand-teal;
+  }
+  p {
+    @apply text-pretty;
+  }
+  a {
+    @apply text-brand-teal underline-offset-4;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-sky;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
+  }
+  .eyebrow {
+    @apply text-xs font-bold tracking-[0.18em] text-brand-gold-deep uppercase;
+  }
+  .heading-display {
+    @apply leading-[1.1] tracking-tight;
+  }
+  .btn-brand {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-gold px-7 py-3 text-base font-bold
+      text-brand-teal-darkest no-underline shadow-md shadow-brand-gold/30 transition
+      hover:-translate-y-0.5 hover:bg-brand-gold-light hover:shadow-lg motion-reduce:hover:translate-y-0;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-teal/80 px-6 py-2.5
+      text-sm font-semibold text-brand-teal no-underline transition hover:border-brand-teal hover:bg-brand-teal
+      hover:text-white;
+  }
+  .nav-link {
+    @apply rounded-full px-4 py-2 text-sm font-semibold text-brand-teal no-underline transition-colors
+      hover:bg-brand-surface;
+  }
+  .nav-link[aria-current="page"] {
+    @apply bg-brand-surface text-brand-teal-darkest;
+  }
+  .field {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-brand-text shadow-sm
+      transition outline-none placeholder:text-slate-400 focus:border-brand-sky focus:ring-4 focus:ring-brand-sky/20
+      aria-invalid:border-red-400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-zoom {
+    animation: none;
+  }
+}

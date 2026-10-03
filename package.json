@@ -1,0 +1,25 @@
+{
+  "name": "live406strong",
+  "version": "1.0.0",
+  "description": "406 Strong — personal training website for Sally Beaulieu, Whitefish MT",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "images": "node scripts/optimize-images.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cgbeaulieu/live406strong.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/cgbeaulieu/live406strong/issues"
+  },
+  "homepage": "https://github.com/cgbeaulieu/live406strong#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3"
+  },
+  "private": true
+}
